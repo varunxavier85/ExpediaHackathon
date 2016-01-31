@@ -1,0 +1,35 @@
+<nav style="position:fixed">
+  <div class="nav-wrapper">
+    <a href="/#/" class="brand-logo"><i class="fa fa-suitcase fs-2x"></i>MMT!</a>
+    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <li><a href="/#/voice"><i class="fa fa-microphone"></i>SpeakYourMind</a></li>
+      <li><a href="/#/flights"><i class="fa fa-plane"></i>Best Flights</a></li>
+      <li><a href="http://www.ivp.in/solutions"><i class="fa fa-building"></i>Best Hotels</a></li>
+      <li><a href="http://www.ivp.in/solutions"><i class="fa fa-gift"></i>Best Packages</a></li>
+    </ul>
+    <ul class="side-nav" id="mobile-demo">
+      <li><a href="/#/voice"><i class="fa fa-microphone"></i>SpeakYourMind</a></li>
+      <li><a href="/#/flights"><i class="fa fa-plane"></i>Best Flights</a></li>
+      <li><a href=""><i class="fa fa-building"></i>Best Hotels</a></li>
+      <li><a href=""><i class="fa fa-gift"></i>Best Packages</a></li>
+    </ul>
+  </div>
+</nav>
+
+<script>
+  $(".button-collapse").sideNav();
+</script>
+
+<div ng-controller="MainController as main">
+  <div class="fixed-div bg-1" id="section-1">
+		<div class="section1">
+			<div class="section-1-content">
+				<div class="welcome-text">
+          <span class="welcome-text-head">Make Me Travel!</span> <br>
+          <span class="welcome-text-subheader">Plans your trips because you don't want to</span><br><br>
+          <a href= "/#/voice" class="btn voice-search #212121 grey darken-4" style="opacity:0.8; font-size:16px; box-shadow:5px 2px 2px #212121;"><i class="fa fa-microphone"></i>Try Voice Search</a>
+			</div>
+		</div>
+	</div>
+</div>

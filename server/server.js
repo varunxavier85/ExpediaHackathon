@@ -2,11 +2,12 @@ var express = require('express');
 var app = express();
 var cors = require('cors');
 var pFreeText = require('./parsefreetext');
-
+var bodyParser = require('body-parser');
+app.use(bodyParser.json())
 app.use(cors());
 
-app.get('/api/flightsFromVoice', function(req, res) {
-  pFreeText.getKeyWords('trip to los angeles in march for 5 days', res);
+app.post('/api/flightsFromVoice', function(req, res) {
+  pFreeText.getKeyWords(req.body['searchText'], res);
 });
 
 app.get('/api/packages', function(req, res) {

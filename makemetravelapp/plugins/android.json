@@ -1,0 +1,21 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.hackathon.makemetravel"
+        },
+        "com.phonegap.plugins.speech": {
+            "PACKAGE_NAME": "com.hackathon.makemetravel"
+        },
+        "cordova-plugin-tts": {
+            "PACKAGE_NAME": "com.hackathon.makemetravel"
+        }
+    },
+    "dependent_plugins": {}
+}
