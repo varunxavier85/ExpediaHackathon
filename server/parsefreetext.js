@@ -74,11 +74,38 @@ module.exports = {
                     }
                 }
             }
+
+            if (!searchCriteria.duration) {
+                for (var i = 0; i < textNumbers.length; i++) {
+                    if (searchText.indexOf(textNumbers[i]) > -1) {
+                        searchCriteria.duration = Small[textNumbers[i]];
+                    }
+                }
+            }
+
             //console.log(searchCriteria);
-            if (isPackage) {
-                Package.findPackage(searchCriteria, res);
-            } else {
-                getFlights.run(searchCriteria, res);
+            var searchCriteriaSet = [];
+            if (!searchCriteria.destination) {
+                searchCriteriaSet.push('destination');
+            }
+
+            if (!searchCriteria.travelDate) {
+                searchCriteriaSet.push('month');
+            }
+
+            if (!searchCriteria.duration) {
+                searchCriteriaSet.push('number of days');
+            }
+
+            if (searchCriteriaSet.length === 0) {
+                if (isPackage) {
+                    Package.findPackage(searchCriteria, res);
+                } else {
+                    getFlights.run(searchCriteria, res);
+                }
+            }
+            else {
+                res.status(400).send('Please provide ' + searchCriteriaSet.join());
             }
 
         });
@@ -125,6 +152,7 @@ var Small = {
     'ninety': 90
 };
 
+var textNumbers = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty'];
 var Magnitude = {
     'thousand': 1000,
     'million': 1000000,
