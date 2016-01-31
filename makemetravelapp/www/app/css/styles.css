@@ -50,3 +50,23 @@ nav .brand-logo {
 i {
   margin-right: 5px;
 }
+
+.airport {
+	color: black;
+	font-size:20px;
+}
+ .date {
+	 font-size:14px;
+ }
+
+ .card {
+	 text-align: center;
+ }
+
+ .departure {
+	 padding-bottom: 20px;
+ }
+
+ .segment {
+	 padding: 20px;
+ }

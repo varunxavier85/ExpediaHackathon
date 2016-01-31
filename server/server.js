@@ -6,6 +6,8 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json())
 app.use(cors());
 
+app.options('*', cors());
+
 app.post('/api/flightsFromVoice', function(req, res) {
   pFreeText.getKeyWords(req.body['searchText'], res);
 });
