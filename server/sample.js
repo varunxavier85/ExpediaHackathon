@@ -106,7 +106,33 @@ function getAirportCodes(destinations, callback) {
    });
  //};
 }
+function getBestFlightOfferForPerDayDup(arr1) {
 
+    for(var k=0;k<arr1.length;k++) {
+      var minPrice = 999999.0;
+      //var legIDs = [];
+      var minValueIndex=0;
+      //for(var m=0;m<arr1[k].length;m++){
+        var price = arr1[k][0].totalFarePrice.amount;
+
+
+        //console.log(legIDs);
+        //if(parseFloat(price)<minPrice) {
+         // minPrice = parseFloat(price);
+          //minValueIndex = m;
+          //legIDs.push(arr1[k][m].legIds);
+
+          //}
+      //}
+
+      minPriceForEachDay[k] = price;
+      optimumLegs[k] = arr1[k][0].legIds;
+      console.log(arr1[k][minValueIndex].legIds);
+
+    }
+
+
+}
 
 function getBestFlightOfferForPerDay(arr1) {
 
@@ -152,7 +178,7 @@ getAirportCodes(destinationAirport, function(destinationAirportCodes, destinatio
 makeRequest(function(arr1) {
 
   var responseJsonArray = [];
-	getBestFlightOfferForPerDay(arr1);
+	getBestFlightOfferForPerDayDup(arr1);
   //console.log(mapObj);
   var responseJson = { };
   var segments = [];
@@ -179,7 +205,12 @@ makeRequest(function(arr1) {
     responseJson = {};
     segments = [];
 	}
-	console.log(responseJsonArray);
+	//console.log(responseJsonArray);
+  for(var y=0;y<arr1.length;y++) {
+//console.log(responseJsonArray[y]. price +'--'+responseJsonArray[0].departuredate);
+//console.log(responseJsonArray[y].segments);
+
+  }
 	callback(responseJsonArray);
 });
 
@@ -205,7 +236,7 @@ console.log(Number(inputDuration));
   console.log(inputDest + Number(inputDuration) + inputMonth);
   init(inputDest, inputDuration, inputMonth, function(responseJsonArray) {
   	console.log(responseJsonArray);
-  	res.send(responseJsonArray);
+  	//res.send(responseJsonArray);
   })
 }
 
