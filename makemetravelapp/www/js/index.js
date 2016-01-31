@@ -24,7 +24,6 @@ function recognizeSpeech() {
     var maxMatches = 5;
     var promptString = "Speak now"; // optional
     var language = "en-US"; // optional
-    alert(window.plugins.speechrecognizer);
     window.plugins.speechrecognizer.startRecognize(function(result) {
         alert(result);
     }, function(errorMessage) {
