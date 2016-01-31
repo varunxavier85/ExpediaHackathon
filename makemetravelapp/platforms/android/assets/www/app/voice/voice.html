@@ -13,7 +13,7 @@
       </div>
     </form>
   </div>
-  <div class="row">
+  <div class="row" ng-show="v.flightDisplay">
     <div ng-repeat="flight in v.flights | orderBy: 'price' | limitTo: 5" class="col s12 m6 l5">
       <div class="card">
         <div class="segment"ng-repeat="segment in flight.segments">
@@ -31,6 +31,41 @@
         </div>
         <div class="card-action" style="padding-bottom:20px">
           <span class="price" style="color:#216C2A; font-size:24px;">Roundtrip Price: ${{flight.price}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div row="" ng-hide="v.flightDisplay">
+    <div class="card">
+      <div ng-repeat="leg in v.package.flight.legs">
+        <div class="segment" ng-repeat = "seg in leg.segments">
+          <div class="departure">
+            <span class="airport">{{seg.departureAirportLocation}}</span><span style="color:orange; font-size:22px;">({{seg.departureAirportCode}})</span><br>
+            <strong><span class="date">{{seg.departureTime}}</span></strong>
+          </div>
+          <i class="fa fa-plane fa-3x"></i><br>
+          <div class="arrival">
+            <span class="airport">{{seg.arrivalAirportLocation}}</span><span style="color:orange; font-size:22px;">({{seg.departureAirportCode}})</span><br>
+            <strong><span class="date">{{seg.arrivalTime}}</span></strong>
+          </div>
+        </div>
+      </div>
+      <div class="card-action" style="padding-bottom:20px">
+        <span class="price" style="color:#216C2A; font-size:24px;">Roundtrip Price: ${{v.package.flight.minPrice}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="row" ng-hide="v.flightDisplay">
+    <div ng-repeat="hotel in v.package.hotels" class="col l6 m6 s12">
+      <div class="card" style="height:550px">
+        <div class="card-image">
+          <img ng-src="{{hotel.ThumbnailUrl}}">
+          <span class="card-title">{{hotel.Name}}</span>
+        </div>
+        <div class="card-content" style="font-size:12px;">
+          <p>{{hotel.Description}}</p><br><br>
+          <span>Guest Rating: {{hotel.GuestRating}}</span><br>
+          <span class="price">Price: {{hotel.Price.TotalRate.Value}}</span>
         </div>
       </div>
     </div>

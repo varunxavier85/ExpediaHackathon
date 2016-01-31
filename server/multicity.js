@@ -92,7 +92,7 @@ function getCheapestFlightToAllDestinations(destinationCode, callback) {
      request(flightSearchUrl, function (error, response, body) {
        var data = JSON.parse(body);
        if(typeof data !== 'undefined'){
-         if(typeof data.offers[0] !== 'undefined'){
+         if(typeof data.offers !== 'undefined'){
            var currentPrice = parseFloat(data.offers[0].totalFare);
            if(currentPrice < minPrice) {
              minPrice = currentPrice;

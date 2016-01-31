@@ -1,7 +1,7 @@
 var pythonShell = require('python-shell');
 var getFlights = require('./sample');
 var Package = require('./multicity');
-var cities = ['seattle', 'los angeles', 'portland'];
+var cities = ['seattle', 'los angeles', 'portland', 'chicago', 'orlando', 'dallas', 'austin', 'san francisco', 'dulles', 'atlanta', 'houston', 'memphis', 'nashville'];
 var newcities = ['york', 'orleans'];
 var months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
 
