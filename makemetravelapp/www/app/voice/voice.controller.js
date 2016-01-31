@@ -7,10 +7,9 @@ function VoiceController($window, $http, $scope, $routeParams, CommonData, Voice
   _this.helloworld = 'Hello World';
   _this.setUrl = function() {
     CommonData.setUrl();
-    alert($rootScope.searchText);
     if($rootScope.searchText) {
       _this.searchquery = $rootScope.searchText;
-      _this.search();
+      _this.search(_this.searchquery);
     } else {
       _this.searchquery = 'trip to los angeles in march for 5 days';
     }

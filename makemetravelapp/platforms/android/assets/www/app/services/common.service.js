@@ -10,7 +10,7 @@ angular.module('makemetravel')
         data = newData;
       },
       setUrl: function() {
-        $window.sessionStorage.baseurl = 'http://localhost:3000';
+        $window.sessionStorage.baseurl = 'http://ec2-52-32-60-241.us-west-2.compute.amazonaws.com';
         console.log($window.sessionStorage.baseurl);
       }
     }

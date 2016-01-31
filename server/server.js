@@ -16,8 +16,8 @@ app.get('/api/packages', function(req, res) {
 
 })
 
-//pFreeText.getKeyWords('trip to los angeles in march, book hotel sheraton, 2 days for 1000 dollars', 'res');
+pFreeText.getKeyWords('new york book hotel sheraton, 2 days for 1000 dollars March', 'res');
 
 port = process.env.PORT || 3000;
-app.listen(port);
+//app.listen(port);
 console.log('Magic happens on port:' + port);
