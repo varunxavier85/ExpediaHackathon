@@ -74,7 +74,17 @@ module.exports = {
                     }
                 }
             }
+
+            if (!searchCriteria.duration) {
+                for (var i = 0; i < textNumbers.length; i++) {
+                    if (searchText.indexOf(textNumbers[i]) > -1) {
+                        searchCriteria.duration = Small[textNumbers[i]];
+                    }
+                }
+            }
+
             //console.log(searchCriteria);
+
             if (isPackage) {
                 Package.findPackage(searchCriteria, res);
             } else {
@@ -125,6 +135,7 @@ var Small = {
     'ninety': 90
 };
 
+var textNumbers = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty'];
 var Magnitude = {
     'thousand': 1000,
     'million': 1000000,
