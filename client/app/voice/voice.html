@@ -1,4 +1,23 @@
 <div ng-include="'app/navbar/navbar.html'"></div>
-<div ng-contoller="VoiceController as v">
-
+<div class="container" ng-contoller="VoiceController as v" ng-init="v.setUrl()">
+  <div class="row">
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s10">
+          <input id="email" ng-model="v.searchquery">
+          <label for="search" data-error="wrong" data-success="right"></label>
+          <div class="col s2">
+            <a class="btn" ng-click="v.search(v.searchquery)">Search</a>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="row">
+    <div ng-repeat="flight in v.flights | orderBy: price" class="col s12 m6 l4">
+      {{flight.price}}
+      {{flight.departuredate}}
+      {{flight.returnDate}}
+    </div>
+  </div>
 </div>
