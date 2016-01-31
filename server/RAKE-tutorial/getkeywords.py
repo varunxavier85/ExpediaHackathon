@@ -3,7 +3,7 @@ import operator
 import sys
 
 # EXAMPLE ONE - SIMPLE
-stoppath = "RAKE-tutorial\SmartStoplist.txt"
+stoppath = "RAKE-tutorial/SmartStoplist.txt"
 
 # 1. initialize RAKE by providing a path to a stopwords file
 rake_object = rake.Rake(stoppath)
