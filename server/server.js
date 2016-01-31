@@ -3,7 +3,7 @@ var app = express();
 var pFreeText = require('./parsefreetext');
 
 app.get('/', function(req, res) {
-  pFreeText.getKeyWords('trip to los angeles in march 2017, book hotel sheraton, two month for 1000 dollars', res);
+  pFreeText.getKeyWords('trip to los angeles in march for 5 days', res);
 });
 
 //pFreeText.getKeyWords('trip to los angeles in march, book hotel sheraton, 2 days for 1000 dollars', 'res');

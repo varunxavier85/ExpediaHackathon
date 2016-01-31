@@ -30,14 +30,15 @@ function createDateRange() {
 	var day1 = 1;
 	var numberOfDaysInThisMonth = daysInMonth(travelYear, travelMonth);
 
- 	for(var i=0;i<numberOfDaysInThisMonth-durationOfStay;i++) {
+ 	for(var i=0;i<numberOfDaysInThisMonth-Number(durationOfStay);i++) {
  		var startDay = i+1;
- 		var endDay = startDay + durationOfStay;
+ 		var endDay = startDay + Number(durationOfStay);
+ 		console.log(durationOfStay);
  		var tempStartDate = travelYear + '-' + travelMonth + '-' + startDay;
  		var tempEndDate = travelYear + '-' + travelMonth + '-' + endDay;
  		departureDateArray.push(tempStartDate);
  		returnDateArray.push(tempEndDate);
- 		//console.log(departureDateArray[i] + '-----' + returnDateArray[i]);
+ 		console.log(departureDateArray[i] + '-----' + returnDateArray[i]);
  	
     }
 
@@ -141,6 +142,7 @@ function getBestFlightOfferForPerDay(arr1) {
 function init(destinationAirport, inputDuration, inputMonth, callback) {
 	console.log('Inside INit');
 	durationOfStay = inputDuration;
+	console.log(durationOfStay);
   travelMonth = inputMonth;
 createDateRange();
 getAirportCodes(destinationAirport, function(destinationAirportCodes, destinationLatLang) {
@@ -194,6 +196,8 @@ module.exports = {
  run: function (inputJson, res) {
     
   console.log(inputJson.duration);
+  console.log(inputJson.destination);
+  console.log(inputJson.travelDate);
 
     var inputDest = inputJson.destination;
   var inputDuration = inputJson.duration;
