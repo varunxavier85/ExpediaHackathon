@@ -3,22 +3,35 @@
   <div class="row">
     <form class="col s12">
       <div class="row">
-        <div class="input-field col s10">
+        <div class="input-field col l10 m8 s12">
           <input id="email" ng-model="v.searchquery">
           <label for="search" data-error="wrong" data-success="right"></label>
-          <div class="col s2">
-            <a class="btn" ng-click="v.search(v.searchquery)">Search</a>
+          <div class="col l2 m4 s12">
+            <a class="btn" ng-click="v.search(v.searchquery)" style="margin: 0 auto">Search</a>
           </div>
         </div>
       </div>
     </form>
   </div>
   <div class="row">
-    <div ng-repeat="flight in v.flights | orderBy: price" class="col s12 m6 l4">
-      <div class="card blue lighten-4">
-      {{flight.price}} <br>
-      {{flight.departuredate}} <br>
-      {{flight.returnDate}} <br>
+    <div ng-repeat="flight in v.flights | orderBy: 'price' | limitTo: 5" class="col s12 m6 l5">
+      <div class="card">
+        <div class="segment"ng-repeat="segment in flight.segments">
+          <div ng-repeat="seg in segment">
+            <div class="departure">
+              <span class="airport">{{seg.departureAirportLocation}}</span><span style="color:orange; font-size:22px;">({{seg.departureAirportCode}})</span><br>
+              <strong><span class="date">{{seg.departureTime}}</span></strong>
+            </div>
+            <i class="fa fa-plane fa-3x"></i><br>
+            <div class="arrival">
+              <span class="airport">{{seg.arrivalAirportLocation}}</span><span style="color:orange; font-size:22px;">({{seg.departureAirportCode}})</span><br>
+              <strong><span class="date">{{seg.arrivalTime}}</span></strong>
+            </div>
+          </div>
+        </div>
+        <div class="card-action" style="padding-bottom:20px">
+          <span class="price" style="color:#216C2A; font-size:24px;">Roundtrip Price: ${{flight.price}}</span>
+        </div>
       </div>
     </div>
   </div>
