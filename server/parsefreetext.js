@@ -15,6 +15,7 @@ module.exports = {
             var searchCriteria = {};
             keywords = keywords.replace('[', '');
             keywords = keywords.replace(']', '');
+            keywords = keywords.replace(/(\r\n|\n|\r)/gm,'');
             keywords = keywords.toLowerCase();
             keywords = keywords.split(',');
 
