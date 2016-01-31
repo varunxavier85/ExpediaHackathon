@@ -13,8 +13,9 @@ function VoiceController($window, $http, $scope, $routeParams, CommonData, Voice
   _this.searchquery = 'trip to los angeles in march for 5 days';
 
   _this.search = function(query) {
+    console.log('here');
     VoiceSearch.getFlightsFromVoice(query).success(function(data) {
-      _this.flights = data;    
+      _this.flights = data;
     })
   }
 }

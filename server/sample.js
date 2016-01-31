@@ -30,9 +30,9 @@ function createDateRange() {
 	var day1 = 1;
 	var numberOfDaysInThisMonth = daysInMonth(travelYear, travelMonth);
 
- 	for(var i=0;i<numberOfDaysInThisMonth-durationOfStay;i++) {
+ 	for(var i=0;i<numberOfDaysInThisMonth-Number(durationOfStay);i++) {
  		var startDay = i+1;
- 		var endDay = startDay + durationOfStay;
+ 		var endDay = startDay + Number(durationOfStay);
  		var tempStartDate = travelYear + '-' + travelMonth + '-' + startDay;
  		var tempEndDate = travelYear + '-' + travelMonth + '-' + endDay;
  		departureDateArray.push(tempStartDate);
@@ -205,5 +205,5 @@ console.log(Number(inputDuration));
   	res.send(responseJsonArray);
   })
 }
- 
+
 }
