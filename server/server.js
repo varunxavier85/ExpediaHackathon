@@ -9,11 +9,11 @@ app.use(cors());
 app.options('*', cors());
 
 app.post('/api/flightsFromVoice', function(req, res) {
-  pFreeText.getKeyWords(req.body['searchText'], res);
+  pFreeText.getKeyWords(req.body['searchText'], res, false);
 });
 
-app.get('/api/packages', function(req, res) {
-
+app.post('/api/packagesFromVoice', function(req, res) {
+  pFreeText.getKeyWords(req.body['searchText'], res, true);
 })
 
 pFreeText.getKeyWords('new york book hotel sheraton, 2 days for 1000 dollars March', 'res');

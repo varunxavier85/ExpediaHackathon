@@ -1,11 +1,12 @@
 var pythonShell = require('python-shell');
 var getFlights = require('./sample');
+var Package = require('./multicity');
 var cities = ['seattle', 'los angeles', 'portland'];
 var newcities = ['york', 'orleans'];
 var months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
 
 module.exports = {
-    getKeyWords: function(searchText, res) {
+    getKeyWords: function(searchText, res, isPackage) {
         var pyshell = new pythonShell('RAKE-tutorial/getkeywords.py', {
             args: [searchText]
         });
@@ -47,7 +48,7 @@ module.exports = {
             if (!searchCriteria.destination) {
                 for (var i = 0; i < keywords.length; i++) {
                     for (var j = 0; j < cities.length; j++) {
-                        if(keywords[i].indexOf(cities[j]) > -1 ){
+                        if (keywords[i].indexOf(cities[j]) > -1) {
                             searchCriteria.destination = cities[j];
                         }
                     }
@@ -57,7 +58,7 @@ module.exports = {
             if (!searchCriteria.destination) {
                 for (var i = 0; i < keywords.length; i++) {
                     for (var j = 0; j < newcities.length; j++) {
-                        if(keywords[i].indexOf(newcities[j]) > -1 ){
+                        if (keywords[i].indexOf(newcities[j]) > -1) {
                             searchCriteria.destination = 'new ' + newcities[j];
                         }
                     }
@@ -67,14 +68,19 @@ module.exports = {
             if (!searchCriteria.travelDate) {
                 for (var i = 0; i < keywords.length; i++) {
                     for (var j = 0; j < months.length; j++) {
-                        if(keywords[i].indexOf(months[j]) > -1 ){
+                        if (keywords[i].indexOf(months[j]) > -1) {
                             searchCriteria.travelDate = getMonthFromString(months[j]);
                         }
                     }
                 }
             }
             //console.log(searchCriteria);
-            getFlights.run(searchCriteria, res);
+            if (isPackage) {
+                Package.findPackage(searchCriteria, res);
+            } else {
+                getFlights.run(searchCriteria, res);
+            }
+
         });
     }
 };
