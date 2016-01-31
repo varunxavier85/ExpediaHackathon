@@ -197,7 +197,7 @@ module.exports = {
 
     var inputDest = inputJson.destination;
   var inputDuration = inputJson.duration;
-  var inputMonth = 3;
+  var inputMonth = inputJson.travelDate;
 console.log(Number(inputDuration));
   console.log(inputDest + Number(inputDuration) + inputMonth);
   init(inputDest, inputDuration, inputMonth, function(responseJsonArray) {
