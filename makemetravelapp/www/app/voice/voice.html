@@ -35,8 +35,25 @@
       </div>
     </div>
   </div>
+  <div row="" ng-hide="v.flightDisplay">
+    <div class="card">
+      <div ng-repeat="leg in v.package.flight.legs">
+        <div class="segment" ng-repeat = "seg in leg.segments">
+          <div class="departure">
+            <span class="airport">{{seg.departureAirportLocation}}</span><span style="color:orange; font-size:22px;">({{seg.departureAirportCode}})</span><br>
+            <strong><span class="date">{{seg.departureTime}}</span></strong>
+          </div>
+          <i class="fa fa-plane fa-3x"></i><br>
+          <div class="arrival">
+            <span class="airport">{{seg.arrivalAirportLocation}}</span><span style="color:orange; font-size:22px;">({{seg.departureAirportCode}})</span><br>
+            <strong><span class="date">{{seg.arrivalTime}}</span></strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="row" ng-hide="v.flightDisplay">
-    <div ng-repeat="hotel in v.package.hotels" class="col l5 m6 s12">
+    <div ng-repeat="hotel in v.package.hotels" class="col l6 m6 s12">
       <div class="card" style="height:550px">
         <div class="card-image">
           <img ng-src="{{hotel.ThumbnailUrl}}">

@@ -91,12 +91,14 @@ function getCheapestFlightToAllDestinations(destinationCode, callback) {
 
      request(flightSearchUrl, function (error, response, body) {
        var data = JSON.parse(body);
-       var currentPrice = parseFloat(data.offers[0].totalFare);
-       if(currentPrice < minPrice) {
-         minPrice = currentPrice;
-         depIndex = iter;
-         offerLegs = data.offers[0].legIds;
-         bestData = data;
+       if(typeof data.offers[0] !== 'undefined'){
+         var currentPrice = parseFloat(data.offers[0].totalFare);
+         if(currentPrice < minPrice) {
+           minPrice = currentPrice;
+           depIndex = iter;
+           offerLegs = data.offers[0].legIds;
+           bestData = data;
+         }
        }
        iter++;
        if(iter === departureDateArray.length) {
@@ -147,15 +149,20 @@ function getBestHotelInDateRange(latLang, minPriceFlightForMonth, callback) {
   console.log(hotelSearchUrl);
   request(hotelSearchUrl, function(error, response, body) {
     var data = JSON.parse(body);
-    var hotelList = data.HotelInfoList.HotelInfo;
-    for(i=0; i<hotelList.length; i++) {
-      if(typeof hotelList[i].Price !== 'undefined'){
-        var pricePerNight = parseFloat(hotelList[i].Price.TotalRate.Value)/durationOfStay;
-        var starRating = parseFloat(hotelList[i].StarRating);
-        var guestRating = parseFloat(hotelList[i].GuestRating);
 
-        if(starRating >=3.5 && guestRating > 4 && (pricePerNight)<= 200) {
-          bestHotels.push(hotelList[i]);
+    if(typeof data.HotelInfoList !== 'undefined'){
+      if(typeof data.HotelInfoList.HotelInfo !== 'undefined') {
+        var hotelList = data.HotelInfoList.HotelInfo;
+      }
+      for(i=0; i<hotelList.length; i++) {
+        if(typeof hotelList[i].Price !== 'undefined'){
+          var pricePerNight = parseFloat(hotelList[i].Price.TotalRate.Value)/durationOfStay;
+          var starRating = parseFloat(hotelList[i].StarRating);
+          var guestRating = parseFloat(hotelList[i].GuestRating);
+
+          if(starRating >=3.5 && guestRating > 4 && (pricePerNight)<= 200) {
+            bestHotels.push(hotelList[i]);
+          }
         }
       }
     }
