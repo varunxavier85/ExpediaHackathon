@@ -23,7 +23,7 @@ function getTravelDateRange(month, callback) {
 
 }
 
-function createDateRange() {
+function createDateRange(monthOfTravel) {
   var day1 = 1;
   var numberOfDaysInThisMonth = daysInMonth(yearOfTravel, monthOfTravel);
   console.log(numberOfDaysInThisMonth);
