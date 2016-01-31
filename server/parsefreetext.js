@@ -84,11 +84,28 @@ module.exports = {
             }
 
             //console.log(searchCriteria);
+            var searchCriteriaSet = [];
+            if (!searchCriteria.destination) {
+                searchCriteriaSet.push('destination');
+            }
 
-            if (isPackage) {
-                Package.findPackage(searchCriteria, res);
-            } else {
-                getFlights.run(searchCriteria, res);
+            if (!searchCriteria.travelDate) {
+                searchCriteriaSet.push('month');
+            }
+
+            if (!searchCriteria.duration) {
+                searchCriteriaSet.push('number of days');
+            }
+
+            if (searchCriteriaSet.length === 0) {
+                if (isPackage) {
+                    Package.findPackage(searchCriteria, res);
+                } else {
+                    getFlights.run(searchCriteria, res);
+                }
+            }
+            else {
+                res.status(400).send('Please provide ' + searchCriteriaSet.join());
             }
 
         });
