@@ -23,10 +23,11 @@ function getTravelDateRange(month, callback) {
 
 }
 
-function createDateRange(monthOfTravel) {
+function createDateRange(mo) {
   var day1 = 1;
-  var numberOfDaysInThisMonth = daysInMonth(yearOfTravel, monthOfTravel);
-  console.log(numberOfDaysInThisMonth);
+  console.log('mo-' + mo)
+  var numberOfDaysInThisMonth = daysInMonth(yearOfTravel, mo);
+  console.log('numDaysinMonth' + numberOfDaysInThisMonth);
 
   for(var i=0;i<numberOfDaysInThisMonth-Number(durationOfStay);i++) {
     var startDay = i+1;
@@ -73,7 +74,7 @@ function getAirportCodes(destinations, callback) {
 
 // Step 2: Find cheapest date to travel to each of the destinations
 function getCheapestFlightToAllDestinations(destinationCode, callback) {
-  console.log(destinationCode);
+  console.log('dest code' + destinationCode);
   var minPrice = 99999.9;
   var leg = null;
   var iter = 0;
@@ -135,14 +136,14 @@ function getDeals() {
     var data = JSON.parse(body);
     var packages = data.deals.packages;
     for(var i=0; i<packages.length; i++) {
-      console.log(packages[i]);
+      console.log('packages' + packages[i]);
     }
   });
 }
 
 function getBestHotelInDateRange(latLang, minPriceFlightForMonth, callback) {
-  console.log(latLang);
-  console.log(minPriceFlightForMonth);
+  console.log('latLang' + latLang);
+  console.log('minPriceFlightForMonth' + minPriceFlightForMonth);
   var bestHotels = [];
   var hotelSearchUrl = 'http://terminal2.expedia.com/x/'+
                        'hotels?location='+latLang
@@ -177,15 +178,15 @@ function init(inputDest, inputDuration, inputMonth, callback) {
   durationOfStay = inputDuration;
   monthOfTravel = inputMonth;
 
-  console.log(destinations);
-  console.log(durationOfStay);
-  console.log(inputMonth);
+  console.log('destinations' + destinations);
+  console.log('duration of stay ' + durationOfStay);
+  console.log('input month' + inputMonth);
 
-  createDateRange();
+  createDateRange(inputMonth);
   getAirportCodes(destinations, function(airportCodes, latLang) {
     for (code in airportCodes) {
       getCheapestFlightToAllDestinations(airportCodes[code], function(minPriceFlightForMonth) {
-        console.log(minPriceFlightForMonth);
+        console.log('minPriceFlightForMonth' + minPriceFlightForMonth);
         getBestHotelInDateRange(latLang[code], minPriceFlightForMonth, function(bestHotels) {
           var response = {'flight':minPriceFlightForMonth, 'hotels': bestHotels};
           callback(response)
