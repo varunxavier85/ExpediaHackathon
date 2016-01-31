@@ -3,9 +3,9 @@
  var departureAirport = 'SEA';
  var arrivalAirport = 'DFW';
 
- var travelMonth=3;
+ var travelMonth;
  var travelYear = 2016;
- var durationOfStay = 7;
+ var durationOfStay;
  var departureDateArray =[];
  var returnDateArray=[];
  var offersArray=[];
@@ -51,6 +51,10 @@ var numberOfDaysInThisMonth = daysInMonth(travelYear, travelMonth);
 
 var arrlength = 0;
 for(var j=0;j<numberOfDaysInThisMonth-durationOfStay;j++) {
+    
+
+    //console.log(departureAirport);
+    //console.log(arrivalAirport);
 
 	var flightSearchUrl = 'http://terminal2.expedia.com/x/mflights/search?'+
                        'departureAirport=' + departureAirport + '&' +
@@ -58,10 +62,12 @@ for(var j=0;j<numberOfDaysInThisMonth-durationOfStay;j++) {
                        'departureDate='+departureDateArray[j]+'&'+ 
                        'returnDate='+returnDateArray[j]+ '&'+
                        'apikey=ZGFHz2FBGb4Sbd7f8zJGYDy1HYRFnMGS';
+   // console.log(flightSearchUrl);                   
 
 	 request(flightSearchUrl, function (error, response, body) {
 	  if (!error && response.statusCode == 200) {
         var tempOffers = parser.parse(body).offers;
+        //console.log(tempOffers);
         var legs = parser.parse(body).legs;
          
          for(var n=0;n<legs.length;n++) {
@@ -132,11 +138,15 @@ function getBestFlightOfferForPerDay(arr1) {
  
 
 
-function init(destinationAirport) {
+function init(destinationAirport, inputDuration, inputMonth, callback) {
+	console.log('Inside INit');
+	durationOfStay = inputDuration;
+  travelMonth = inputMonth;
 createDateRange();
 getAirportCodes(destinationAirport, function(destinationAirportCodes, destinationLatLang) {
-
+//console.log(destinationAirportCodes);
   arrivalAirport = destinationAirportCodes;
+  
 
 makeRequest(function(arr1) {
 
@@ -168,24 +178,40 @@ makeRequest(function(arr1) {
     responseJson = {};
     segments = [];
 	}
-console.log(responseJsonArray);
+	console.log(responseJsonArray);
+	callback(responseJsonArray);
 });
 
 });
 
 }
 
-run(inputJson) {
 
 
-  var inputDest = inputJson.destination;
+
+
+module.exports = {
+ run: function (inputJson, res) {
+    
+  console.log(inputJson.duration);
+
+    var inputDest = inputJson.destination;
   var inputDuration = inputJson.duration;
+  var inputMonth = 3;
+console.log(Number(inputDuration));
+  console.log(inputDest + Number(inputDuration) + inputMonth);
+  init(inputDest, inputDuration, inputMonth, function(responseJsonArray) {
+  	console.log(responseJsonArray);
+  	res.send(responseJsonArray);
+  })
+
+
 
 
 
 }
  
-
+}
 
  
 

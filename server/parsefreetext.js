@@ -1,4 +1,5 @@
 var pythonShell = require('python-shell');
+var getFlights = require('./sample');
 
 var flights = ['delta', 'alaska'];
 var cities = ['seattle', 'los angeles', 'portland'];
@@ -43,8 +44,14 @@ module.exports = {
                     //Not in the array
                 }
 
-                console.log(searchCriteria);
+                //console.log(searchCriteria);
             }
+
+
+
+         getFlights.run(searchCriteria, res);
+
+
         });
     }
 };
