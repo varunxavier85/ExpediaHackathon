@@ -1,13 +1,12 @@
 var pythonShell = require('python-shell');
-
 var getFlights = require('./sample');
-
-
-
-var cities = ['seattle', 'los angeles', 'portland'];
+var Package = require('./multicity');
+var cities = ['seattle', 'los angeles', 'portland', 'chicago', 'orlando', 'dallas', 'austin', 'san francisco', 'dulles', 'atlanta', 'houston', 'memphis', 'nashville'];
+var newcities = ['york', 'orleans'];
+var months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
 
 module.exports = {
-    getKeyWords: function(searchText, res) {
+    getKeyWords: function(searchText, res, isPackage) {
         var pyshell = new pythonShell('RAKE-tutorial/getkeywords.py', {
             args: [searchText]
         });
@@ -21,43 +20,66 @@ module.exports = {
             keywords = keywords.split(',');
 
             for (var i = 0; i < keywords.length; i++) {
-                var currKeyword = keywords[i].replace(' ', '');
+                var currKeyword = keywords[i].trim();
                 currKeyword = currKeyword.replace("'", "");
                 currKeyword = currKeyword.replace("'", "");
+                console.log(currKeyword);
 
                 if (cities.indexOf(currKeyword) > -1) {
                     searchCriteria.destination = currKeyword;
                     continue;
-                } else {
-                    //Not in the array
                 }
 
                 if (getMonthFromString(currKeyword) > -1) {
                     searchCriteria.travelDate = getMonthFromString(currKeyword);
                     continue;
-                } else {
-                    //Not in the array
                 }
 
                 if (currKeyword.indexOf('days') > -1) {
                     var numbers = currKeyword.match(/\d+/);
                     if (numbers) {
                         searchCriteria.duration = numbers[0];
-                    }
-                    else{
+                    } else {
                         searchCriteria.duration = text2num(currKeyword.replace('days', '').replace(' ', ''));
                     }
-                } else {
-                    //Not in the array
                 }
-
-                //console.log(searchCriteria);
             }
 
+            if (!searchCriteria.destination) {
+                for (var i = 0; i < keywords.length; i++) {
+                    for (var j = 0; j < cities.length; j++) {
+                        if (keywords[i].indexOf(cities[j]) > -1) {
+                            searchCriteria.destination = cities[j];
+                        }
+                    }
+                }
+            }
 
+            if (!searchCriteria.destination) {
+                for (var i = 0; i < keywords.length; i++) {
+                    for (var j = 0; j < newcities.length; j++) {
+                        if (keywords[i].indexOf(newcities[j]) > -1) {
+                            searchCriteria.destination = 'new ' + newcities[j];
+                        }
+                    }
+                }
+            }
 
-         getFlights.run(searchCriteria, res);
-
+            if (!searchCriteria.travelDate) {
+                for (var i = 0; i < keywords.length; i++) {
+                    for (var j = 0; j < months.length; j++) {
+                        if (keywords[i].indexOf(months[j]) > -1) {
+                            searchCriteria.travelDate = getMonthFromString(months[j]);
+                        }
+                    }
+                }
+            }
+            //console.log(searchCriteria);
+            if (isPackage) {
+                Package.findPackage(searchCriteria, res);
+            } else {
+                getFlights.run(searchCriteria, res);
+            }
 
         });
     }
@@ -139,7 +161,7 @@ function feach(w) {
             n = n + g * x
             g = 0;
         } else {
-            alert("Unknown number: " + w);
+            //alert("Unknown number: " + w);
         }
     }
 }

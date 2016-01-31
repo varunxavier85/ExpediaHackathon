@@ -1,12 +1,23 @@
 var express = require('express');
 var app = express();
+var cors = require('cors');
 var pFreeText = require('./parsefreetext');
+var bodyParser = require('body-parser');
+app.use(bodyParser.json())
+app.use(cors());
 
-app.get('/', function(req, res) {
-  pFreeText.getKeyWords('trip to los angeles in march for 5 days', res);
+
+app.options('*', cors());
+
+app.post('/api/flightsFromVoice', function(req, res) {
+  pFreeText.getKeyWords(req.body['searchText'], res, false);
 });
 
-//pFreeText.getKeyWords('trip to los angeles in march, book hotel sheraton, 2 days for 1000 dollars', 'res');
+app.post('/api/packagesFromVoice', function(req, res) {
+  pFreeText.getKeyWords(req.body['searchText'], res, true);
+})
+
+//pFreeText.getKeyWords('new york book hotel sheraton, 2 days for 1000 dollars March', 'res');
 
 port = process.env.PORT || 3000;
 app.listen(port);
