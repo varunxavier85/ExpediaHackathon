@@ -91,15 +91,18 @@ function getCheapestFlightToAllDestinations(destinationCode, callback) {
 
      request(flightSearchUrl, function (error, response, body) {
        var data = JSON.parse(body);
-       if(typeof data.offers[0] !== 'undefined'){
-         var currentPrice = parseFloat(data.offers[0].totalFare);
-         if(currentPrice < minPrice) {
-           minPrice = currentPrice;
-           depIndex = iter;
-           offerLegs = data.offers[0].legIds;
-           bestData = data;
+       if(typeof data !== 'undefined'){
+         if(typeof data.offers[0] !== 'undefined'){
+           var currentPrice = parseFloat(data.offers[0].totalFare);
+           if(currentPrice < minPrice) {
+             minPrice = currentPrice;
+             depIndex = iter;
+             offerLegs = data.offers[0].legIds;
+             bestData = data;
+           }
          }
        }
+
        iter++;
        if(iter === departureDateArray.length) {
          for(var i=0; i<bestData.legs.length; i++) {
