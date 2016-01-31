@@ -1,11 +1,10 @@
 var pythonShell = require('python-shell');
+
 var getFlights = require('./sample');
 
-var flights = ['delta', 'alaska'];
+
+
 var cities = ['seattle', 'los angeles', 'portland'];
-var travelDate = ['weekend', 'month', 'january', 'feb', 'march', 'november'];
-var travelYear = ['2016', '2017'];
-var days = ['1 day', '2 days', '3 days'];
 
 module.exports = {
     getKeyWords: function(searchText, res) {
@@ -17,7 +16,7 @@ module.exports = {
             var searchCriteria = {};
             keywords = keywords.replace('[', '');
             keywords = keywords.replace(']', '');
-            keywords = keywords.replace(/(\r\n|\n|\r)/gm,'');
+            keywords = keywords.replace(/(\r\n|\n|\r)/gm, '');
             keywords = keywords.toLowerCase();
             keywords = keywords.split(',');
 
@@ -25,21 +24,29 @@ module.exports = {
                 var currKeyword = keywords[i].replace(' ', '');
                 currKeyword = currKeyword.replace("'", "");
                 currKeyword = currKeyword.replace("'", "");
-                
+
                 if (cities.indexOf(currKeyword) > -1) {
                     searchCriteria.destination = currKeyword;
+                    continue;
                 } else {
                     //Not in the array
                 }
 
-                if (travelDate.indexOf(currKeyword) > -1) {
-                    searchCriteria.travelDate = travelDate[travelDate.indexOf(currKeyword)];
+                if (getMonthFromString(currKeyword) > -1) {
+                    searchCriteria.travelDate = getMonthFromString(currKeyword);
+                    continue;
                 } else {
                     //Not in the array
                 }
 
-                if (days.indexOf(currKeyword) > -1) {
-                    searchCriteria.duration = currKeyword.replace('days', '').replace(' ', '');
+                if (currKeyword.indexOf('days') > -1) {
+                    var numbers = currKeyword.match(/\d+/);
+                    if (numbers) {
+                        searchCriteria.duration = numbers[0];
+                    }
+                    else{
+                        searchCriteria.duration = text2num(currKeyword.replace('days', '').replace(' ', ''));
+                    }
                 } else {
                     //Not in the array
                 }
@@ -55,6 +62,15 @@ module.exports = {
         });
     }
 };
+
+function getMonthFromString(mon) {
+
+    var d = Date.parse(mon + "1, 2012");
+    if (!isNaN(d)) {
+        return new Date(d).getMonth() + 1;
+    }
+    return -1;
+}
 
 var Small = {
     'zero': 0,
@@ -88,17 +104,17 @@ var Small = {
 };
 
 var Magnitude = {
-    'thousand':     1000,
-    'million':      1000000,
-    'billion':      1000000000,
-    'trillion':     1000000000000,
-    'quadrillion':  1000000000000000,
-    'quintillion':  1000000000000000000,
-    'sextillion':   1000000000000000000000,
-    'septillion':   1000000000000000000000000,
-    'octillion':    1000000000000000000000000000,
-    'nonillion':    1000000000000000000000000000000,
-    'decillion':    1000000000000000000000000000000000,
+    'thousand': 1000,
+    'million': 1000000,
+    'billion': 1000000000,
+    'trillion': 1000000000000,
+    'quadrillion': 1000000000000000,
+    'quintillion': 1000000000000000000,
+    'sextillion': 1000000000000000000000,
+    'septillion': 1000000000000000000000000,
+    'octillion': 1000000000000000000000000000,
+    'nonillion': 1000000000000000000000000000000,
+    'decillion': 1000000000000000000000000000000000,
 };
 
 var a, n, g;
@@ -115,18 +131,15 @@ function feach(w) {
     var x = Small[w];
     if (x != null) {
         g = g + x;
-    }
-    else if (w == "hundred") {
+    } else if (w == "hundred") {
         g = g * 100;
-    }
-    else {
+    } else {
         x = Magnitude[w];
         if (x != null) {
             n = n + g * x
             g = 0;
-        }
-        else { 
-            alert("Unknown number: "+w); 
+        } else {
+            alert("Unknown number: " + w);
         }
     }
 }
