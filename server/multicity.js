@@ -5,7 +5,7 @@ var GOOG_API_KEY = 'AIzaSyCHJKhe_B331eVlKsTLl4-FHrmvTd9lFSY';
 
 //Figure out if flights are needed between multiple destinations?
 var origin = 'Seattle';
-var originAirport = 'PDX';
+var originAirport = 'SEA';
 var numTravelers = '2';
 var durationOfStay = 3;
 var destinations = {
@@ -28,9 +28,9 @@ function createDateRange() {
   var numberOfDaysInThisMonth = daysInMonth(yearOfTravel, monthOfTravel);
   console.log(numberOfDaysInThisMonth);
 
-  for(var i=0;i<numberOfDaysInThisMonth-durationOfStay;i++) {
+  for(var i=0;i<numberOfDaysInThisMonth-Number(durationOfStay);i++) {
     var startDay = i+1;
-    var endDay = startDay + durationOfStay;
+    var endDay = startDay + Number(durationOfStay);
     var tempStartDate = yearOfTravel + '-' + appendZero(monthOfTravel) + '-' + appendZero(startDay);
     var tempEndDate = yearOfTravel + '-' + appendZero(monthOfTravel) + '-' + appendZero(endDay);
     departureDateArray.push(tempStartDate);
@@ -88,6 +88,7 @@ function getCheapestFlightToAllDestinations(destinationCode, callback) {
                         'departureDate='+departureDateArray[j]+'&'+
                         'returnDate='+returnDateArray[j]+ '&'+
                         'apikey=ZGFHz2FBGb4Sbd7f8zJGYDy1HYRFnMGS';
+
      request(flightSearchUrl, function (error, response, body) {
        var data = JSON.parse(body);
        var currentPrice = parseFloat(data.offers[0].totalFare);
@@ -161,15 +162,43 @@ function getBestHotelInDateRange(latLang, minPriceFlightForMonth, callback) {
     callback(bestHotels);
   });
 }
+function init(inputDest, inputDuration, inputMonth, callback) {
+  destinations['destination1'] = inputDest;
+  durationOfStay = inputDuration;
+  monthOfTravel = inputMonth;
 
-createDateRange();
-getAirportCodes(destinations, function(airportCodes, latLang) {
-  for (code in airportCodes) {
-    getCheapestFlightToAllDestinations(airportCodes[code], function(minPriceFlightForMonth) {
-      console.log(minPriceFlightForMonth);
-      getBestHotelInDateRange(latLang[code], minPriceFlightForMonth, function(bestHotels) {
-        console.log(bestHotels.length);
+  console.log(destinations);
+  console.log(durationOfStay);
+  console.log(inputMonth);
+
+  createDateRange();
+  getAirportCodes(destinations, function(airportCodes, latLang) {
+    for (code in airportCodes) {
+      getCheapestFlightToAllDestinations(airportCodes[code], function(minPriceFlightForMonth) {
+        console.log(minPriceFlightForMonth);
+        getBestHotelInDateRange(latLang[code], minPriceFlightForMonth, function(bestHotels) {
+          var response = {'flight':minPriceFlightForMonth, 'hotels': bestHotels};
+          callback(response)
+        })
       })
+    }
+  });
+}
+
+// init('Newark', 5, 3, function(response) {
+//   console.log(response);
+// })
+
+module.exports = {
+   findPackage: function (inputJson, res) {
+
+    var inputDest = inputJson.destination;
+    var inputDuration = inputJson.duration;
+    var inputMonth = inputJson.travelDate;
+
+    init(inputDest, inputDuration, inputMonth, function(response) {
+    	console.log(response);
+    	res.send(response);
     })
   }
-});
+}

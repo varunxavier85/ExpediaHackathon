@@ -1,13 +1,13 @@
 var pythonShell = require('python-shell');
 
 var getFlights = require('./sample');
-
+var Package = require('./multicity');
 
 
 var cities = ['seattle', 'los angeles', 'portland'];
 
 module.exports = {
-    getKeyWords: function(searchText, res) {
+    getKeyWords: function(searchText, res, isPackage) {
         var pyshell = new pythonShell('RAKE-tutorial/getkeywords.py', {
             args: [searchText]
         });
@@ -56,8 +56,12 @@ module.exports = {
 
 
 
-         getFlights.run(searchCriteria, res);
-
+         //getFlights.run(searchCriteria, res);
+         if(isPackage) {
+           Package.findPackage(searchCriteria, res);
+         } else {
+           getFlights.run(searchCriteria, res);
+         }
 
         });
     }
